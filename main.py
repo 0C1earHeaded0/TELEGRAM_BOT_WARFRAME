@@ -1,7 +1,13 @@
 import logging
 import requests
+import os
 from telegram import Update, Chat, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters, CallbackQueryHandler
+from dotenv import load_dotenv
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+if os.path.exists(dotenv_path):
+    load_dotenv(dotenv_path)
 
 def isServerAvailable():
     if requests.get("https://api.warframestat.us/pc").status_code != 200:
@@ -86,7 +92,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await query.answer()
         
 if __name__ == '__main__':
-    application = ApplicationBuilder().token('7478612676:AAHw8p8z9ONL7BCDlU8e-rInft1DORKKBi4').build()
+    application = ApplicationBuilder().token(os.environ.get('TOKEN')).build()
     application.add_handler(CommandHandler('start', start)) #Добавляем обработчик событий
     application.add_handler(CommandHandler('cetus', cetus))
     application.add_handler(CommandHandler('cambionDrift', cambionDrift))
