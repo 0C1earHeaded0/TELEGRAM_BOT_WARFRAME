@@ -27,7 +27,11 @@ logging.basicConfig(
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, 
-                                   text="Привет! Я бот по игре Warframe!\nЯ призван упростить мониторинг за игровыми событиями, возникающими в ваше отсутствие в игре :)",
+                                   text=
+                                   "Привет!👋\n"
+                                   "Я бот по игре Warframe!\n"
+                                   "Я призван упростить мониторинг за игровыми событиями 😉\n"
+                                   "🌍 Выбери локацию с помощью кнопок снизу:",
                                    reply_markup=keyboard)
     if not isServerAvailable():
         await context.bot.send_message(chat_id=update.effective_chat.id, 
@@ -78,6 +82,9 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await cetus(update, context)
     elif query.data == '2':
         await cambionDrift(update, context)
+        
+    await query.answer()
+        
 if __name__ == '__main__':
     application = ApplicationBuilder().token('7478612676:AAHw8p8z9ONL7BCDlU8e-rInft1DORKKBi4').build()
     application.add_handler(CommandHandler('start', start)) #Добавляем обработчик событий
