@@ -14,13 +14,16 @@ def isServerAvailable():
         return False
     else:
         return True
-
+    
 keyboardForCetusStatus = [
     [
-        InlineKeyboardButton("ЦЕТУС (РАВНИНЫ ЭЙДОЛОНА)", callback_data='1')
+        InlineKeyboardButton("Равнины Эйдолона (Цетус)", callback_data='1')
     ],
     [
         InlineKeyboardButton("Камбионский Дрейф (Деймос)", callback_data='2')
+    ],
+    [
+        InlineKeyboardButton("Долина Сфер (Фортуна)", callback_data='3')
     ]
 ]
 
@@ -50,7 +53,6 @@ async def cetus(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not isServerAvailable():
         await context.bot.send_message(chat_id=update.effective_chat.id, 
                                        text="В данный момент сервер не отвечает :(\nВозвращайтесь к нам позже!")
-        return
     else:
         cetusStatus = requests.get("https://api.warframestat.us/pc/cetusCycle?language=ru").json()
         await context.bot.send_message(chat_id=update.effective_chat.id, 
@@ -65,7 +67,6 @@ async def cambionDrift(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not isServerAvailable():
         await context.bot.send_message(chat_id=update.effective_chat.id, 
                                        text="В данный момент сервер не отвечает :(\nВозвращайтесь к нам позже!")
-        return
     else:
         cambionStatus = requests.get("https://api.warframestat.us/pc/cambionCycle?language=ru").json()
         await context.bot.send_message(chat_id=update.effective_chat.id, 
