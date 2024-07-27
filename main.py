@@ -9,7 +9,7 @@ dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path)
 
-def isServerAvailable():
+async def isServerAvailable():
     if requests.get("https://api.warframestat.us/pc").status_code != 200:
         return False
     else:
@@ -37,7 +37,7 @@ logging.basicConfig(
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not isServerAvailable():
         await context.bot.send_message(chat_id=update.effective_chat.id, 
-                                       text="В данный момент сервер не отвечает :(\nВозвращайтесь к нам позже!")
+                                       text="В данный момент сервер не отвечает ☹️\nВозвращайтесь к нам позже!")
     else:
         await context.bot.send_message(chat_id=update.effective_chat.id, 
                                     text=
@@ -109,10 +109,8 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     
     if query.data == '1': 
         await cetus(update, context)
-        
     elif query.data == '2':
         await cambionDrift(update, context)
-        
     elif query.data == '3':
         await orbVallis(update, context)
         
@@ -121,7 +119,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         
 if __name__ == '__main__':
     application = ApplicationBuilder().token(os.environ.get('TOKEN')).build()
-    application.add_handler(CommandHandler('start', start)) #Добавляем обработчик событий
+    application.add_handler(CommandHandler('start', start))
     application.add_handler(CommandHandler('cetus', cetus))
     application.add_handler(CommandHandler('cambionDrift', cambionDrift))
     application.add_handler(CommandHandler('orbVallis', orbVallis))
